@@ -1,0 +1,32 @@
+# Secrets & Environment Variables
+.env
+.env.*
+
+# Python / Backend
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+env/
+.pytest_cache/
+
+# Node / Frontend
+frontend/node_modules/
+node_modules/
+frontend/build/
+frontend/dist/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# IDEs and Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# Agent / Temp Directories
+.agents/
+.gemini/
