@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
 from dotenv import load_dotenv
 import os
@@ -26,6 +27,24 @@ async def lifespan(app: FastAPI):
         client.close()
 
 app = FastAPI(title="CREAM Portal API", lifespan=lifespan)
+
+origins = [
+    "http://localhost:3000",
+    "https://c-r-e-a-m-portal.onrender.com",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+from routers import auth_router, energy_router, education_router
+app.include_router(auth_router.router)
+app.include_router(energy_router.router)
+app.include_router(education_router.router)
 
 @app.get("/")
 @app.head("/")

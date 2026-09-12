@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { AuthContext } from '../context/AuthContext';
 
 const EnergyCalculator = () => {
+  const { user, token } = useContext(AuthContext);
   const [consumption, setConsumption] = useState('');
   const [results, setResults] = useState(null);
 
@@ -27,8 +29,41 @@ const EnergyCalculator = () => {
       capacity: `${recommendedCapacity} kW`,
       cost: `₹ ${cost.toLocaleString('en-IN')}`,
       savings: `₹ ${annualSavings.toLocaleString('en-IN')} / year`,
-      co2: `${co2Reduction.toLocaleString('en-IN')} kg / year`
+      co2: `${co2Reduction.toLocaleString('en-IN')} kg / year`,
+      rawKwh: kwh,
+      rawCapacity: recommendedCapacity,
+      rawCost: cost,
+      rawSavings: annualSavings,
+      rawCo2: co2Reduction
     });
+  };
+
+  const saveAssessment = async () => {
+    if (!results || !token) return;
+    try {
+      const res = await fetch(`${process.env.REACT_APP_API_URL || 'http://localhost:8000'}/api/energy/assess`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify({
+          consumption_kwh: parseFloat(results.rawKwh),
+          recommended_capacity_kw: parseFloat(results.rawCapacity),
+          estimated_cost_inr: parseFloat(results.rawCost),
+          annual_savings_inr: parseFloat(results.rawSavings),
+          co2_reduction_kg: parseFloat(results.rawCo2)
+        })
+      });
+      if (res.ok) {
+        alert("Assessment saved to Dashboard!");
+      } else {
+        alert("Failed to save assessment.");
+      }
+    } catch(e) {
+      console.error(e);
+      alert("Error saving assessment.");
+    }
   };
 
   return (
@@ -77,6 +112,11 @@ const EnergyCalculator = () => {
               <p className="body-large" style={{ fontWeight: 'bold' }}>{results.co2}</p>
             </div>
           </div>
+          {user && (
+            <div style={{ marginTop: '24px' }}>
+              <button onClick={saveAssessment} className="m3-button m3-button--filled">Save to Dashboard</button>
+            </div>
+          )}
         </div>
       )}
     </div>
