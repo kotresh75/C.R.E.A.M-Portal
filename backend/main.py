@@ -1,19 +1,18 @@
 from fastapi import FastAPI
+from contextlib import asynccontextmanager
 from dotenv import load_dotenv
 import os
 from motor.motor_asyncio import AsyncIOMotorClient
 
 load_dotenv(dotenv_path="../.env")
 
-app = FastAPI(title="CREAM Portal API")
-
 # Setup MongoDB Connection
 MONGO_URI = os.getenv("MongoUri")
 client = None
 db = None
 
-@app.on_event("startup")
-async def startup_db_client():
+@asynccontextmanager
+async def lifespan(app: FastAPI):
     global client, db
     if MONGO_URI:
         try:
@@ -22,13 +21,14 @@ async def startup_db_client():
             print("Successfully initialized MongoDB connection!")
         except Exception as e:
             print(f"Error initializing MongoDB: {e}")
-
-@app.on_event("shutdown")
-async def shutdown_db_client():
+    yield
     if client:
         client.close()
 
+app = FastAPI(title="CREAM Portal API", lifespan=lifespan)
+
 @app.get("/")
+@app.head("/")
 def read_root():
     return {"message": "Welcome to CREAM Portal API"}
 
@@ -51,4 +51,6 @@ async def health_check():
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run("main:app", host="127.0.0.1", port=8000, reload=True)
+    import os
+    port = int(os.getenv("PORT", 8000))
+    uvicorn.run("main:app", host="0.0.0.0", port=port)
