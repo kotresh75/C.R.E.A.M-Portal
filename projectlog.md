@@ -37,3 +37,5 @@
 - Redesigned Home screen with new layout, hero image, and information sections 
 13/09/2026 - 18:44 IST  
 - Updated UI to use modern asymmetrical shapes and subtle borders 
+16/09/2026 - 16:08 IST  
+- Fixed ESLint warnings (removed unused imports in App.js and ArticleDetail.js, ignored exhaustive-deps warning in Dashboard.js) to fix build errors 

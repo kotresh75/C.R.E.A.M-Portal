@@ -45,6 +45,7 @@ const Dashboard = () => {
       fetchAssessments();
       fetchLogs();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [token]);
 
   const handleLogSubmit = async (e) => {
