@@ -1,79 +1,84 @@
-# CREAM Portal Setup Instructions
-
-This document provides instructions on how to download dependencies and start the CREAM Portal application.
-
-## Prerequisites
-- Node.js (v18 or higher)
-- Python (v3.9 or higher)
-- MongoDB Database
-
-## Frontend (React)
-
-1. Open a command prompt (cmd).
-2. Navigate to the frontend directory:
-   ```cmd
-   cd frontend
-   ```
-3. Install the required npm dependencies:
-   ```cmd
-   npm install
-   ```
-4. Start the development server:
-   ```cmd
-   npm start
-   ```
-The frontend will be available at `http://localhost:3000`.
-
-## Backend (FastAPI Python)
-
-1. Open a command prompt (cmd).
-2. Navigate to the backend directory:
-   ```cmd
-   cd backend
-   ```
-3. Install the required Python dependencies:
-   ```cmd
-   pip install -r requirements.txt
-   ```
-4. Ensure your `.env` file is present in the root `f:\cream-portal` directory with your MongoDB credentials (e.g., `MongoUri`).
-5. Start the FastAPI server:
-   ```cmd
-   python main.py
-   ```
-The backend API will be available at `http://localhost:8000`.
+<div align="center">
+  <h1>C.R.E.A.M Portal 🌍⚡</h1>
+  <p><b>Community Renewable Energy Awareness & Management</b></p>
+  <p><i>A Societal Project (1BCP308) promoting SDGs 7, 11, and 15</i></p>
+</div>
 
 ---
 
-## 📊 Project Status & Roadmap
+## 📖 About The Project
+The **C.R.E.A.M Portal** is a full-stack web application designed to bridge the knowledge gap regarding renewable energy in local communities. Built to simplify the transition to sustainable energy, the portal offers an intuitive **Energy Calculator** and an unbiased **Educational Hub**.
 
-Based on the **Community Project / Societal Project (1BCP308)** syllabus requirements, here is the detailed breakdown of completed tasks and pending deliverables.
+**Team Members:** Kotresh C | Chinmay Homkar | Preetham Javali  
+**Project Guide:** Prof. Rajini Tiwari  
 
-### 💻 Software Development (COMPLETED ✅)
-*Syllabus Phase 10: App Development*
-- [x] **Frontend:** React setup, Premium Dark Mode UI, Routing, Login/Register UI.
-- [x] **Backend:** FastAPI, MongoDB schema, CORS, Authentication API.
-- [x] **Core Features:** Energy Management Dashboard, Energy Calculator integration.
-- [x] **Educational Module:** Renewable Energy Education Module with article seeding and AI-generated images.
+---
 
-### 📝 Documentation & Planning (IN PROGRESS 🔄)
-*Required for CIE & SEE Evaluation.*
-- [x] **Phase 1 - Course Plan:** Define the team structure and finalize the course plan.
-- [x] **Phase 2 - Topic Selection:** Document the shortlisted project topic (*Community Renewable Energy Awareness and Management Portal*).
-- [ ] **Phase 4 - Problem Statement:** Draft the official approved problem statement, scope, and objectives.
-- [ ] **Phase 5 - Literature Review:** Study existing solutions and prepare a baseline analysis summary.
-- [ ] **Phase 6 - Work Plan:** Create a Gantt chart, plan activities, divide roles, and prepare the project schedule.
-- [ ] **Phase 7 - Feasibility Analysis:** Generate possible engineering solutions and evaluate technical feasibility.
-- [ ] **Phase 8 - Concept Note:** Finalize the concept, methods, and expected outcomes (Design Outline).
-- [ ] **Phase 9 - Technical Analysis:** Document data processing, calculations, sizing, and mapping.
+## ✨ Key Features
+- ⚡ **Energy Calculator:** Calculate solar capacity, installation costs, annual savings, and CO2 reduction based on your monthly grid (BESCOM) bill.
+- 📚 **Educational Hub:** Read unbiased articles and guides on sustainable energy practices.
+- 🔒 **User Dashboard:** Secure authentication (JWT) to save your calculation history and track your transition goals.
+- 🌓 **Premium UI:** Glassmorphism design with a fully responsive, dark-mode-first aesthetic.
 
-### 🤝 Community Interaction & Field Work (PENDING ⏳)
-*Mandatory stakeholder engagement evidence required.*
-- [ ] **Phase 3 - Preliminary Survey:** Collect initial data from the community/users. *(Deliverable: Survey notes, interview records)*
-- [ ] **Phase 11 - Testing & Refinement:** Test the prototype with real users and validate the proposal. *(Deliverable: Test results / revised output)*
-- [ ] **Phase 12 - Field Implementation:** Conduct a demonstration or awareness activity within the community. *(Deliverable: Photos, attendance, implementation record)*
+---
 
-### 🎓 Final Deliverables (PENDING ⏳)
-*Required for Final Evaluation and Viva.*
-- [ ] **Phase 13 - Draft Report:** Compile findings, stakeholder feedback, and observations into a comprehensive draft report.
-- [ ] **Phase 14 - Presentation Deck:** Prepare slides/poster and rehearse for the mock presentation.
-- [ ] **Phase 15 - Final Report:** Submit the final project report, complete the presentation, and reflect on the learning.
+## 🛠️ Tech Stack
+- **Frontend:** React, HTML5, Custom CSS3
+- **Backend:** Python, FastAPI
+- **Database:** MongoDB
+- **Architecture:** Decoupled Client-Server
+
+---
+
+## 📑 Official Project Documentation (Syllabus Phases)
+This project strictly follows the 15-phase Continuous Internal Evaluation (CIE) process as outlined in the 1BCP308 syllabus.
+
+### Part 1: Planning & Research
+| Phase | Deliverable / Activity | Status | Document Link |
+| :--- | :--- | :---: | :--- |
+| **Phase 1** | Course Plan & Team Structure | ✅ | [📄 View phase-1-course-plan.md](./docs/phase-1-course-plan.md) |
+| **Phase 2** | Topic Selection | ✅ | [📄 View phase-2-topic-selection.md](./docs/phase-2-topic-selection.md) |
+| **Phase 4** | Problem Statement & Scope | ✅ | [📄 View phase-4-problem-statement.md](./docs/phase-4-problem-statement.md) |
+| **Phase 5** | Literature Review | ✅ | [📄 View phase-5-literature-review.md](./docs/phase-5-literature-review.md) |
+| **Phase 6** | Work Plan (Gantt Chart) | ✅ | [📄 View phase-6-work-plan.md](./docs/phase-6-work-plan.md) |
+| **Phase 7** | Feasibility Analysis | ✅ | [📄 View phase-7-feasibility-analysis.md](./docs/phase-7-feasibility-analysis.md) |
+| **Phase 8** | Concept Note (Design Outline) | ✅ | [📄 View phase-8-concept-note.md](./docs/phase-8-concept-note.md) |
+| **Phase 9** | Technical Analysis | ✅ | [📄 View phase-9-technical-analysis.md](./docs/phase-9-technical-analysis.md) |
+
+### Part 2: Field Work & Final Deliverables
+| Phase | Deliverable / Activity | Status | Document Link |
+| :--- | :--- | :---: | :--- |
+| **Phase 3** | Preliminary Survey (Stakeholders) | ✅ | [📄 View phase-3-preliminary-survey.md](./docs/phase-3-preliminary-survey.md) |
+| **Phase 11** | Testing & Refinement | ✅ | [📄 View phase-11-testing.md](./docs/phase-11-testing.md) |
+| **Phase 12** | Field Implementation Record | ✅ | [📄 View phase-12-implementation.md](./docs/phase-12-implementation.md) |
+| **Phase 13** | Draft Project Report | ✅ | [📄 View phase-13-draft-report.md](./docs/phase-13-draft-report.md) |
+| **Phase 14** | Presentation Deck Outline | ✅ | [📄 View phase-14-presentation.md](./docs/phase-14-presentation.md) |
+| **Phase 15** | Final Submission Checklist | ✅ | [📄 View phase-15-final-report.md](./docs/phase-15-final-report.md) |
+
+*(Note: Phase 10 corresponds to the App Development/Codebase itself).*
+
+---
+
+## 📁 Annexures & References
+- 📝 [Annexure A: Preliminary Survey Questionnaire](./docs/annexure-questionnaire.md)
+- 👥 [Annexure B: Team Peer-Evaluation Sheet](./docs/annexure-peer-evaluation.md)
+- 📋 [Official Syllabus Reference](./docs/syllabus.md)
+
+---
+
+## 🚀 How to Run Locally
+
+### 1. Start the Backend (FastAPI)
+```bash
+cd backend
+pip install -r requirements.txt
+uvicorn main:app --reload
+```
+
+### 2. Start the Frontend (React)
+```bash
+cd frontend
+npm install
+npm start
+```
+*(Note: Ensure MongoDB is running locally or provide a valid URI in your environment variables).*

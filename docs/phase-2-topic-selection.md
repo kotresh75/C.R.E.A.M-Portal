@@ -1,3 +1,7 @@
+**[⬅️ Back to Main README](../README.md)** | **[⬅️ Previous Phase](./phase-1-course-plan.md)** | **[Next Phase ➡️](./phase-3-preliminary-survey.md)**
+
+---
+
 # Phase 2: Community Problem Identification & Topic Selection
 
 ## 1. Problem Identification
