@@ -55,10 +55,10 @@ Based on the **Community Project / Societal Project (1BCP308)** syllabus require
 - [x] **Core Features:** Energy Management Dashboard, Energy Calculator integration.
 - [x] **Educational Module:** Renewable Energy Education Module with article seeding and AI-generated images.
 
-### 📝 Documentation & Planning (PENDING ⏳)
+### 📝 Documentation & Planning (IN PROGRESS 🔄)
 *Required for CIE & SEE Evaluation.*
-- [ ] **Phase 1 - Course Plan:** Define the team structure and finalize the course plan.
-- [ ] **Phase 2 - Topic Selection:** Document the shortlisted project topic (*Community Renewable Energy Awareness and Management Portal*).
+- [x] **Phase 1 - Course Plan:** Define the team structure and finalize the course plan.
+- [x] **Phase 2 - Topic Selection:** Document the shortlisted project topic (*Community Renewable Energy Awareness and Management Portal*).
 - [ ] **Phase 4 - Problem Statement:** Draft the official approved problem statement, scope, and objectives.
 - [ ] **Phase 5 - Literature Review:** Study existing solutions and prepare a baseline analysis summary.
 - [ ] **Phase 6 - Work Plan:** Create a Gantt chart, plan activities, divide roles, and prepare the project schedule.
