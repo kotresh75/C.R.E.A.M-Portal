@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Community Renewable Energy Portal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#fbfcfa;--surface:#fff;--ink:#14313b;--mute:#566b73;--line:#d8e3e6;--sun:#f2b705;--sunink:#14313b;--sky:#dceff5;--leaf:#2f7d5b;--bad:#b3402a;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0e1d23;--surface:#16293180;--ink:#e8f1f3;--mute:#9bb2b9;--line:#2a424a;--sky:#173540;--leaf:#5cc79a;--bad:#ff8f77}}
+:root[data-theme="dark"]{--bg:#0e1d23;--surface:#16293180;--ink:#e8f1f3;--mute:#9bb2b9;--line:#2a424a;--sky:#173540;--leaf:#5cc79a;--bad:#ff8f77}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.55 "Source Sans 3",system-ui,sans-serif}
+h1,h2,h3{font-family:"Bricolage Grotesque",system-ui,sans-serif;line-height:1.1;margin:0 0 .5em}
+h1{font-size:clamp(2.2rem,6vw,3.6rem);font-weight:800;letter-spacing:-.02em}
+h2{font-size:1.7rem;font-weight:700}h3{font-size:1.15rem;font-weight:700}
+.wrap{max-width:1000px;margin:0 auto;padding:0 20px}
+header{background:var(--sky);border-bottom:1px solid var(--line);padding:28px 0 0}
+.hero{display:grid;grid-template-columns:1.3fr 1fr;gap:28px;align-items:center;padding-bottom:28px}
+.hero p{color:var(--mute);max-width:46ch;margin:0 0 14px}
+.name{font:inherit;font-weight:600;color:var(--ink);background:transparent;border:0;border-bottom:2px dashed var(--mute);padding:2px 0;width:min(100%,22ch)}
+.sun{width:100%;max-width:260px;justify-self:center}
+nav{display:flex;gap:4px;overflow-x:auto;padding-bottom:0}
+nav a{padding:12px 16px;text-decoration:none;color:var(--mute);font-weight:600;white-space:nowrap;border-bottom:3px solid transparent}
+nav a[aria-current="true"]{color:var(--ink);border-color:var(--sun)}
+nav a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid var(--leaf);outline-offset:2px}
+main{padding:32px 0 60px}
+section[hidden]{display:none}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:20px;margin-bottom:18px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+label{display:block;font-weight:600;margin:10px 0 4px}
+input,select{width:100%;font:inherit;padding:10px;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--ink)}
+button{font:inherit;font-weight:700;border:0;border-radius:6px;padding:11px 18px;background:var(--sun);color:var(--sunink);cursor:pointer;margin-top:14px}
+button.ghost{background:transparent;border:1px solid var(--line);color:var(--ink);padding:6px 12px;margin:0}
+.big{font:800 2.4rem/1 "Bricolage Grotesque",sans-serif;color:var(--leaf)}
+.stat small{display:block;color:var(--mute);margin-top:6px}
+.res{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin-top:16px}
+.note{color:var(--mute);font-size:.9rem}
+table{width:100%;border-collapse:collapse}th,td{text-align:left;padding:8px 6px;border-bottom:1px solid var(--line)}
+.scroll{overflow-x:auto}
+details{border-bottom:1px solid var(--line);padding:10px 0}summary{cursor:pointer;font-weight:600}
+.opt{display:block;width:100%;text-align:left;background:var(--bg);border:1px solid var(--line);color:var(--ink);font-weight:400;margin:6px 0 0}
+.opt.ok{border-color:var(--leaf);background:var(--sky)}.opt.no{border-color:var(--bad)}
+.tag{display:inline-block;padding:2px 10px;border-radius:99px;font-size:.85rem;font-weight:600;background:var(--sky)}
+.tag.open{background:var(--sun);color:#14313b}
+.bar{display:grid;grid-template-columns:90px 1fr 80px;gap:10px;align-items:center;margin:6px 0}.bar i{display:block;height:14px;border-radius:4px;background:var(--sun)}
+ul,ol{padding-left:22px}li{margin:4px 0}.card a{font-weight:600;color:var(--leaf)}
+.q{border:1px solid var(--line);border-radius:8px;margin:0 0 14px;padding:12px}.q legend{font-weight:600;padding:0 6px}
+.ch{display:block;padding:8px 10px;margin:6px 0;border:1px solid var(--line);border-radius:6px;font-weight:400;cursor:pointer}.ch input{width:auto;margin-right:6px}
+.ch.ok{border-color:var(--leaf);background:rgba(47,125,91,.18)}.ch.no{border-color:var(--bad);background:rgba(179,64,42,.18);color:var(--bad)}
+.fb{margin:6px 0 0;font-weight:600}.fb.ok{color:var(--leaf)}.fb.no{color:var(--bad)}.score{font:700 1.3rem 'Bricolage Grotesque',sans-serif;margin-top:14px}
+textarea{width:100%;font:inherit;padding:10px;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--ink);min-height:110px;resize:vertical}
+.shbtns{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}.shbtns button{margin:0}
+.shbtns .ghost{padding:10px 14px;font-weight:600}
+.sh{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:6px;border:1px solid var(--line);color:var(--ink)!important;font-weight:600;text-decoration:none;background:transparent;cursor:pointer}
+.sh svg{width:20px;height:20px;fill:currentColor;flex:none}
+.sh:hover{border-color:var(--leaf)}
+.sh.wa{background:#25d366;border-color:#25d366;color:#06301a!important}
+.stp{margin:14px 0 0;padding:14px;border:1px solid var(--line);border-radius:8px;background:var(--bg)}
+.stp h4{margin:0 0 8px;font:700 1.05rem 'Bricolage Grotesque',sans-serif}
+.stp label{display:flex;gap:10px;align-items:flex-start;font-weight:400;margin:8px 0}
+.stp label input{width:auto;margin-top:5px;flex:none}
+.stp label span b{color:var(--leaf)}
+.stp label.done span{color:var(--mute);text-decoration:line-through}
+.stp .dl{margin:10px 0 0}
+.stp .dl summary{font-weight:600}
+@media (max-width:700px){.hero{grid-template-columns:1fr}.sun{max-width:150px}}
+</style>
+</head>
+<body>
+<header>
+<div class="wrap">
+<div class="hero">
+<div>
+<h1>Power our neighbourhood with the sun.</h1>
+<p>Learn what solar can do for your home, check your savings, and join the community plan.</p>
+<label for="cname" class="note" style="margin:0">Community name (click to edit)</label>
+<input id="cname" class="name" value="Your Community Name" maxlength="40">
+</div>
+<svg class="sun" viewBox="0 0 200 200" aria-hidden="true"><g stroke="#f2b705" stroke-width="8" stroke-linecap="round"><path d="M100 14v22M100 164v22M14 100h22M164 100h22M39 39l15 15M146 146l15 15M161 39l-15 15M54 146l-15 15"/></g><circle cx="100" cy="100" r="42" fill="#f2b705"/></svg>
+</div>
+<nav aria-label="Portal sections">
+<a href="#learn">Learn</a><a href="#awareness">Awareness drive</a><a href="#schemes">Government schemes</a><a href="#apply">How to apply</a><a href="#calculator">Savings calculator</a><a href="#tracker">Usage tracker</a><a href="#dashboard">Community dashboard</a><a href="#register">Join</a><a href="#issues">Issues</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+
+<section id="learn" hidden>
+<h2>Renewable energy basics</h2>
+<div class="grid">
+<div class="card"><h3>Solar</h3><p>Rooftop panels turn sunlight into electricity. India gets 4–5 peak sun hours a day in most regions.</p></div>
+<div class="card"><h3>Wind</h3><p>Turbines suit open, windy sites. Small turbines can add to rooftop solar in coastal and hilly areas.</p></div>
+<div class="card"><h3>Biomass and biogas</h3><p>Kitchen, farm and garden waste can produce cooking gas and power.</p></div>
+<div class="card"><h3>Hydro</h3><p>Flowing water drives generators. Mostly large-scale, with small micro-hydro in some villages.</p></div>
+</div>
+<div class='card'><h3>India’s clean power today</h3><p>Non-fossil power capacity reached 300.5 GW on 31 July 2026. That is over 60% of India’s 500 GW target for 2030, and more than 54% of the country’s roughly 552 GW total. India added a record 55.29 GW in 2025–26, and ranks third in the world for renewable capacity.</p><div id='mix' role='img' aria-label='Installed capacity by source in gigawatts'></div><p class='note'>Source: Ministry of New and Renewable Energy, as of 31 July 2026. Capacity is not the same as generation: non-fossil sources supplied 29.2% of India’s electricity in 2025–26, so there is still a long way to go.</p></div>
+<div class="card"><h3>Myths and facts</h3>
+<details><summary>Solar does not work on cloudy days.</summary><p>Panels still produce power under clouds, just less. Monthly output averages out over the year.</p></details>
+<details><summary>Solar is too expensive for ordinary homes.</summary><p>Central and state subsidies, plus bank loans, cut the upfront cost. Most homes recover the cost in several years.</p></details>
+<details><summary>Tenants can claim the solar subsidy.</summary><p>PM Surya Ghar is meant for people who own the house. A tenant cannot claim it alone, but can ask the owner to apply or join a community installation.</p></details>
+<details><summary>Any panel qualifies for the subsidy.</summary><p>Only panels on the government’s approved list (ALMM) qualify, so use a registered vendor.</p></details>
+<details><summary>Panels need constant maintenance.</summary><p>Cleaning every few weeks and an annual inspection is usually enough.</p></details>
+<details><summary>Go solar and you will never pay an electricity bill.</summary><p>Net metering offsets your units, but fixed charges and night-time use may still appear on the bill.</p></details>
+</div>
+<div class='card'><h3>How rooftop solar works</h3><ol><li>Sunlight falls on the panels on your roof and they produce direct current (DC) electricity.</li><li>An inverter changes it to alternating current (AC), the kind your home appliances use.</li><li>Your home uses the solar power first. Any extra goes to the grid through a net meter.</li><li>The meter records what you send out and what you draw in, and your bill is reduced by the difference.</li></ol></div>
+<div class='card'><h3>Why it matters</h3><div class='grid'>
+<div><h3>For your household</h3><p>Lower electricity bills for years, and protection from future tariff rises. Use the savings calculator to see your own numbers.</p></div>
+<div><h3>For the community</h3><p>Shared solar for common areas cuts society maintenance costs. Local installation and servicing also create jobs. PM Surya Ghar has reported about 38,500 direct jobs.</p></div>
+<div><h3>For the environment</h3><p>Solar produces no smoke or fumes while generating power. Each unit of solar replaces a unit made from coal, which cuts CO₂ and air pollution. India aims for net zero emissions by 2070.</p></div>
+</div></div>
+<div class='card'><h3>Did you know?</h3><ul>
+<li>India’s solar capacity grew from about 2.8 GW in 2014 to 164.59 GW in July 2026.</li>
+<li>India installed a record 44.6 GW of solar in 2025–26 alone.</li>
+<li>A 1 kW rooftop system gives roughly 4 units a day (about 120 a month), depending on sunlight.</li>
+<li>Solar panels typically keep working for 25 years or more with basic cleaning.</li>
+<li>More than 1.4 crore diesel pumps run on Indian farms, burning about 6 billion litres of diesel a year. Solar pumps under PM-KUSUM replace them.</li>
+<li>Switching to LED bulbs is the cheapest way to start saving energy today.</li></ul>
+<p class='note'>Sources: MNRE and PIB statements and 2026 news reports. Pump figures are approximate.</p></div>
+<div class="card"><h3>Quick quiz</h3><p class='note'>Answer all questions, then press Submit. Correct answers turn green and wrong answers turn red.</p><div id="quiz"></div></div>
+<p class="note">Subsidy schemes such as PM Surya Ghar change over time. Check the official portal before applying.</p>
+</section>
+
+<section id='awareness' hidden>
+<h2>Awareness drive</h2>
+<p>This is how we reach people in the community, and how we measure whether they learned something.</p>
+<div class='grid'>
+<div class='card'><h3>Survey</h3><p>Ask 20 to 30 residents what they know about solar and subsidies. Record answers in the survey below.</p></div>
+<div class='card'><h3>Door-to-door visits</h3><p>Small groups explain savings and subsidy in the local language. Face-to-face talks work best for elders.</p></div>
+<div class='card'><h3>Posters and pamphlets</h3><p>Put them on notice boards, in shops and in the community hall. Include the helpline 15555 and a QR code to this portal.</p></div>
+<div class='card'><h3>Awareness session</h3><p>A 30-minute talk with a live calculator demo. Invite a solar vendor or electricity office staff to answer questions.</p></div>
+<div class='card'><h3>Quiz and slogan contest</h3><p>Use the quiz on the Learn page. Hold a drawing and slogan contest for children, who carry the message home.</p></div>
+<div class='card'><h3>Digital sharing</h3><p>Share this portal link and simple infographics in neighbourhood and college WhatsApp groups. Use the share box below.</p></div>
+</div>
+<div class='card'><h3>Key messages to repeat</h3><ul><li>Rooftop solar can cut your electricity bill for 25 years or more.</li><li>The central subsidy is up to ₹78,000 under PM Surya Ghar.</li><li>Apply at pmsuryaghar.gov.in or call 15555.</li><li>House owners apply. Tenants can ask the owner or join a community plan.</li><li>Start by saving energy: LED bulbs, star-rated appliances, AC at 24–26 °C.</li></ul></div>
+<div class='card' id='sharebox'><h3>Share this awareness drive</h3>
+<p>Send the portal to neighbours, family and community groups. Edit the message if you like, then pick where to share.</p>
+<label for='slink'>Portal link</label><input id='slink' type='url' inputmode='url' spellcheck='false'>
+<p id='slinknote' class='note'></p>
+<label for='smsgtxt'>Message</label><textarea id='smsgtxt' maxlength='500'></textarea>
+<div class='shbtns'>
+<button id='shcopy'>Copy link</button>
+<button id='shcopym' class='ghost'>Copy message and link</button>
+<button id='shnative' class='ghost' hidden>Share…</button>
+</div>
+<div class='shbtns'>
+<a id='shwa' class='sh wa' href='#' target='_blank' rel='noopener noreferrer'><svg viewBox='0 0 24 24' aria-hidden='true'><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.2 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.3-.7-2.8-1.2-4.600-4-4.700-4.200-.1-.2-1.100-1.500-1.100-2.800s.7-2 1-2.300c.2-.3.500-.3.700-.3h.5c.2 0 .4 0 .6.500l.8 2c.1.200.1.400 0 .600l-.4.600c-.1.200-.3.300-.1.600.2.300.8 1.300 1.700 2.100 1.200 1 2.100 1.300 2.400 1.500.3.100.5.100.600-.1l.9-1.100c.2-.3.400-.2.600-.1l1.900.9c.3.100.5.200.5.400.1.100.1.700-.1 1.300z"/></svg>WhatsApp</a>
+<a id='shtg' class='sh ' href='#' target='_blank' rel='noopener noreferrer'><svg viewBox='0 0 24 24' aria-hidden='true'><path d="M21.800 4.300 2.900 11.600c-1.300.5-1.300 1.200-.2 1.500l4.800 1.500 1.800 5.600c.2.600.1.800.7.800.5 0 .7-.2 1-.5l2.300-2.300 4.800 3.500c.9.500 1.500.2 1.700-.8l3.100-14.800c.3-1.300-.5-1.900-1.100-1.500zM8.200 13.900l10.700-6.700c.5-.3 1-.1.600.2l-8.800 8-.3 3.600z"/></svg>Telegram</a>
+<a id='shfb' class='sh ' href='#' target='_blank' rel='noopener noreferrer'><svg viewBox='0 0 24 24' aria-hidden='true'><path d="M13.500 22v-8.200h2.800l.4-3.300h-3.200V8.400c0-.9.300-1.600 1.600-1.600h1.700V3.900c-.3 0-1.300-.1-2.500-.1-2.500 0-4.200 1.500-4.200 4.300v2.400H7.300v3.300h2.800V22z"/></svg>Facebook</a>
+<a id='shx' class='sh ' href='#' target='_blank' rel='noopener noreferrer'><svg viewBox='0 0 24 24' aria-hidden='true'><path d="M17.800 3h3.100l-6.800 7.700L22 21h-6.200l-4.900-6.300L5.300 21H2.200l7.300-8.300L2 3h6.400l4.400 5.800zm-1.100 16.200h1.700L7.400 4.700H5.600z"/></svg>X (Twitter)</a>
+<a id='shmail' class='sh ' href='#' target='_blank' rel='noopener noreferrer'><svg viewBox='0 0 24 24' aria-hidden='true'><path d="M3 5h18a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1zm9 7.300L4.500 7v.1L12 12.600 19.500 7.100V7z"/></svg>Email</a>
+<a id='shsms' class='sh ' href='#' target='_blank' rel='noopener noreferrer'><svg viewBox='0 0 24 24' aria-hidden='true'><path d="M4 3h16a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H8l-5 4V5a2 2 0 0 1 1-2zm3 6v2h10V9zm0 4v2h7v-2z"/></svg>SMS</a>
+</div>
+<p id='shmsg' class='note' role='status'></p></div>
+<div class='card'><h3>Awareness survey</h3>
+<label for='sphase'>This response is</label><select id='sphase'><option value='before'>Before the awareness drive</option><option value='after'>After the awareness drive</option></select>
+<div id='sq'></div>
+<button id='sadd'>Save response</button><p id='smsg' class='note' role='status'></p></div>
+<div class='card scroll'><h3>Survey results</h3><table><thead><tr><th>Question</th><th>Before (% yes)</th><th>After (% yes)</th></tr></thead><tbody id='srows'></tbody></table><p id='scount' class='note'></p><button class='ghost' id='sclear'>Clear survey data</button><p class='note'>Responses are saved only in this browser. Copy the results into your report.</p></div>
+</section>
+
+<section id='schemes' hidden>
+<h2>Government schemes</h2>
+<p class='note'>Checked against government statements and 2026 news reports. Schemes change, so confirm on the official site before you apply.</p>
+<div class='card'><label for='who'>Show schemes for</label><select id='who'><option value='all'>Everyone (all schemes)</option><option value='home'>I own a house with a roof</option><option value='tenant'>I rent or live in an apartment</option><option value='society'>My housing society or RWA</option><option value='farmer'>I am a farmer</option><option value='rural'>I live in a rural household with cattle</option></select></div>
+<div id='slist'></div>
+<p class='note'>Sources: MNRE and PIB statements, official scheme portals (pmsuryaghar.gov.in, mnre.gov.in) and 2026 news reports. Last checked November 2026.</p>
+</section>
+
+<section id='apply' hidden>
+<h2>How to get rooftop solar with the subsidy</h2>
+<div class='card'><h3>Steps for PM Surya Ghar</h3><ol>
+<li>Register on the national portal, <a href='https://pmsuryaghar.gov.in' target='_blank' rel='noopener'>pmsuryaghar.gov.in</a>. Choose your state and electricity company (DISCOM) and enter your consumer number and mobile number.</li>
+<li>Apply for a rooftop solar system and wait for your DISCOM’s approval.</li>
+<li>Have it installed by a registered vendor, using panels from the ALMM approved list.</li>
+<li>Get the net meter fitted and the system inspected. The DISCOM issues a commissioning report.</li>
+<li>Upload the report with your bank details. The subsidy arrives in your bank account in about 30 days.</li>
+</ol><p class='note'>The whole process usually takes 2 to 4 months. You pay the full cost first and receive the subsidy afterwards. Solar loans exist: one published example is about ₹1,098 a month for a ₹1 lakh loan over 10 years at 5.75%. Rates change, so ask your bank. Helpline: 15555.</p></div>
+<div class='card'><h3>Documents checklist</h3><div id='docs'></div><p id='dcount' class='note' role='status'></p><p class='note'>This is a typical list. Your DISCOM or installer may ask for more.</p></div>
+<div class='card'><h3>Save energy first</h3><ul><li>Switch to LED bulbs and star-rated appliances.</li><li>Set the AC to 24–26 °C and use a fan with it.</li><li>Unplug chargers and switch off standby devices.</li><li>Use a solar water heater instead of an electric geyser.</li><li>Smaller bills also mean a smaller, cheaper solar system.</li></ul></div>
+</section>
+
+<section id="calculator" hidden>
+<h2>Savings calculator</h2>
+<div class="card">
+<div class="grid">
+<div><label for="bill">Monthly electricity bill (₹)</label><input id="bill" type="number" min="0" value="3000"></div>
+<div><label for="tariff">Tariff per unit (₹)</label><input id="tariff" type="number" min="1" step="0.5" value="7"></div>
+<div><label for="cost">Installation cost per kW (₹)</label><input id="cost" type="number" min="1" value="60000"></div>
+</div>
+<div class="res" id="calcout" aria-live="polite"></div>
+<p class="note">Estimate only. Assumes 4 units per kW per day, 0.82 kg CO₂ saved per unit, and a subsidy of ₹30,000 for 1 kW, ₹60,000 for 2 kW and ₹78,000 for 3 kW or more. Confirm current figures with your DISCOM or the national portal.</p>
+</div>
+</section>
+
+<section id="tracker" hidden>
+<h2>Household usage tracker</h2>
+<div class="card">
+<div class="grid">
+<div><label for="tm">Month</label><input id="tm" type="month"></div>
+<div><label for="tu">Units used (kWh)</label><input id="tu" type="number" min="0"></div>
+</div>
+<button id="tadd">Save reading</button>
+<p id="tmsg" class="note" role="status"></p>
+<div id="tchart" class="scroll"></div>
+</div>
+</section>
+
+<section id="dashboard" hidden>
+<h2>Community dashboard</h2>
+<p class="note">Sample figures until real data is added. New sign-ups on the Join page update these numbers.</p>
+<div class="grid" id="dash"></div>
+</section>
+
+<section id="register" hidden>
+<h2>Join the community solar plan</h2>
+<div class="card">
+<label for="rn">Name</label><input id="rn" maxlength="50">
+<label for="rh">House or flat number</label><input id="rh" maxlength="20">
+<label for="ri">I am interested in</label>
+<select id="ri"><option>Rooftop solar on my home</option><option>Shared community installation</option><option>Learning more first</option></select>
+<label for="rk">Capacity needed (kW)</label><input id="rk" type="number" min="1" max="20" value="2">
+<button id="radd">Register interest</button>
+<p id="rmsg" class="note" role="status"></p>
+</div>
+<div class="card scroll"><h3>Registered households</h3><table><thead><tr><th>Name</th><th>House</th><th>Interest</th><th>kW</th></tr></thead><tbody id="rrows"></tbody></table><p id="rempty" class="note">No sign-ups yet. Use the form above to add the first household.</p></div>
+</section>
+
+<section id="issues" hidden>
+<h2>Maintenance and complaints</h2>
+<div class="card">
+<label for="id">Describe the issue</label><input id="id" maxlength="120" placeholder="e.g. Panel on block B roof is cracked">
+<label for="il">Location</label><input id="il" maxlength="40">
+<button id="iadd">Report issue</button>
+</div>
+<div class="card scroll"><table><thead><tr><th>Issue</th><th>Location</th><th>Status</th><th></th></tr></thead><tbody id="irows"></tbody></table><p id="iempty" class="note">No issues reported. Anything you report will appear here with its status.</p></div>
+</section>
+
+</main>
+<script>
+const $=id=>document.getElementById(id);
+const store={get(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+const fmt=n=>Math.round(n).toLocaleString("en-IN");
+
+/* routing */
+const views=["learn","awareness","schemes","apply","calculator","tracker","dashboard","register","issues"];
+function route(){const v=views.includes(location.hash.slice(1))?location.hash.slice(1):"learn";
+views.forEach(x=>$(x).hidden=x!==v);
+document.querySelectorAll("nav a").forEach(a=>a.setAttribute("aria-current",a.getAttribute("href")==="#"+v));
+if(v==="dashboard")dash();}
+addEventListener("hashchange",route);
+
+/* survey */
+const SQ=['Have you heard of rooftop solar?','Do you know about the PM Surya Ghar subsidy?','Do you know how many units your home uses each month?','Would you install solar if you got a subsidy?','Do you take any steps to save electricity?'];
+let sv=store.get('survey',[]);
+SQ.forEach((q,i)=>{const d=document.createElement('div');const l=document.createElement('label');l.textContent=q;l.htmlFor='sq'+i;const s=document.createElement('select');s.id='sq'+i;['Yes','No'].forEach(v=>{const o=document.createElement('option');o.textContent=v;s.append(o)});d.append(l,s);$('sq').append(d)});
+function drawSv(){const b=$('srows');b.innerHTML='';const bf=sv.filter(r=>r.p==='before'),af=sv.filter(r=>r.p==='after');
+const pc=(a,i)=>a.length?Math.round(a.filter(r=>r.a[i]==='Yes').length/a.length*100)+'%':'–';
+SQ.forEach((q,i)=>{const tr=document.createElement('tr');[q,pc(bf,i),pc(af,i)].forEach(v=>{const td=document.createElement('td');td.textContent=v;tr.append(td)});b.append(tr)});
+$('scount').textContent=sv.length?'Responses: '+bf.length+' before, '+af.length+' after.':'No responses yet. Save a response above to see results.'}
+$('sadd').onclick=()=>{sv.push({p:$('sphase').value,a:SQ.map((q,i)=>$('sq'+i).value)});store.set('survey',sv);$('smsg').textContent='Response saved. Total: '+sv.length+'.';drawSv()};
+$('sclear').onclick=()=>{sv=[];store.set('survey',sv);$('smsg').textContent='Survey data cleared.';drawSv()};
+drawSv();
+
+/* national mix */
+const MIX=[['Solar',164.59],['Wind',58.14],['Hydro',57.24],['Bio-power',11.75],['Nuclear',8.78]];
+MIX.forEach(([l,v])=>{const r=document.createElement('div');r.className='bar';const a=document.createElement('span');a.textContent=l;const b=document.createElement('i');b.style.width=(v/164.59*100)+'%';const c=document.createElement('span');c.textContent=v+' GW';r.append(a,b,c);$('mix').append(r)});
+
+/* schemes */
+const S=[
+{n:'PM Surya Ghar: Muft Bijli Yojana',by:'Ministry of New and Renewable Energy (MNRE)',for:['home','society'],sum:'Central subsidy for rooftop solar on homes. Launched in February 2024 with a ₹75,021 crore outlay. It aims to reach 1 crore households and give up to 300 free units a month.',f:['Subsidy: ₹30,000 for 1 kW, ₹60,000 for 2 kW, ₹78,000 for 3 kW or more','Who can apply: Indian citizens who own a house with a suitable roof and have a valid electricity connection','You must not have claimed a solar subsidy before, and panels must be on the ALMM approved list','Subsidy is credited about 30 days after commissioning','Housing societies and RWAs can get support for shared facilities. Check the portal for the current rate.','Progress: more than 20 lakh household installations reported by spring 2026','Helpline: 15555. Expected to run until March 2027'],u:'https://pmsuryaghar.gov.in'},
+{n:'Net metering',by:'Your electricity company (DISCOM) and state regulator',for:['home','society'],sum:'Owners of rooftop solar are credited for extra power they send to the grid. It is set up with your DISCOM as part of the PM Surya Ghar process.',f:['Credit rules and rates differ from state to state','Fixed charges and night-time use can still appear on your bill','Ask your DISCOM for the current net metering rules in your state'],u:'https://pmsuryaghar.gov.in'},
+{n:'PM-KUSUM',by:'MNRE, run through state nodal agencies',for:['farmer'],sum:'Solar pumps and solar plants for farmers. Launched in 2019 with a ₹34,422 crore central outlay and extended to 31 March 2027. A second phase (2.0) had not been notified as of mid-2026.',f:['Component A: 10,000 MW of small solar plants on farm or barren land','Component B: 20 lakh stand-alone solar pumps up to 7.5 HP','Component C: solarising 15 lakh grid-connected pumps','Typical support: about 30% central and 30% state, with the farmer paying the rest or part by loan. Shares differ by state','More than 21 lakh farmers had benefited by March 2026','Apply through your state renewable energy agency or district office'],u:'https://mnre.gov.in'},
+{n:'National Bioenergy Programme and biogas',by:'MNRE; GOBARdhan is under the Ministry of Jal Shakti',for:['rural','society'],sum:'Support for family and community biogas plants that turn cattle dung and kitchen waste into cooking gas and manure.',f:['The National Bioenergy Programme ran from April 2021 to March 2026 with ₹858 crore in Phase I. Check whether a new phase has been announced','About 43 lakh family-type biogas plants have been built in India','Subsidy depends on plant size and state. Ask your state renewable energy agency for the current amount','GOBARdhan promotes village and community biogas plants'],u:'https://mnre.gov.in'},
+{n:'Options if you rent or live in an apartment',by:'Based on PM Surya Ghar eligibility',for:['tenant','society'],sum:'A tenant cannot claim the PM Surya Ghar subsidy alone, because it is meant for people who own the house.',f:['Ask your landlord to apply and share the savings','Ask your housing society to look at solar for common areas such as lifts, lights and pumps','Join the community solar plan on the Join page of this portal','Cut your own bill first with the energy-saving tips on the How to apply page'],u:'https://pmsuryaghar.gov.in'}];
+
+/* step-by-step guides for each scheme */
+const GUIDE={
+'PM Surya Ghar: Muft Bijli Yojana':{d:['Aadhaar card and Aadhaar-linked mobile number','Latest electricity bill with your consumer number','Proof of house ownership, such as a property tax receipt','Bank passbook or cancelled cheque','Passport-size photograph','Email address (needed to register)'],st:[
+['Check you are eligible','You must own the house, have a suitable shadow-free roof and a valid electricity connection, and not have claimed a solar subsidy before.'],
+['Know your usage','Look at 6 to 12 months of electricity bills. This tells you what size system (1, 2 or 3 kW) you need. Use the Savings calculator in this portal.'],
+['Register on the portal','Go to pmsuryaghar.gov.in. Choose your state and electricity company (DISCOM), then enter your consumer number, mobile number and email.'],
+['Log in and apply','Log in with your consumer number and mobile number. Fill in the rooftop solar application form.'],
+['Wait for DISCOM approval','Your DISCOM checks whether your connection and roof are suitable. You will get the approval on the portal. Do not buy or install anything before this.'],
+['Choose a registered vendor','Pick a vendor listed on the portal. Ask for a written quote, and confirm the panels are on the ALMM approved list.'],
+['Get it installed','The vendor installs the system. Enter the installation details and the plant details on the portal.'],
+['Get the net meter fitted','Apply for net metering on the portal. The DISCOM fits the meter and inspects the system.'],
+['Download the commissioning certificate','Once inspection is passed, the portal issues a commissioning report. Keep a copy.'],
+['Claim your subsidy','Upload your bank account details and a cancelled cheque. The subsidy is credited to your account in about 30 days. Helpline: 15555.']]},
+'Net metering':{d:['Latest electricity bill with consumer number','Sanctioned load details (on your bill)','Installer details and system capacity','Identity proof and address proof','Passport-size photograph'],st:[
+['Ask your DISCOM about the rules','Rates, fees and limits differ by state. Ask your electricity office or look on its website for the current net metering rules.'],
+['Check your sanctioned load','The solar system size is usually limited by your sanctioned load. Find it on your bill.'],
+['Submit the application','Apply on the DISCOM portal. If you are applying for the PM Surya Ghar subsidy, the net meter request is part of that process on pmsuryaghar.gov.in.'],
+['Wait for technical approval','The DISCOM checks that the grid can take your system. Install only after you get approval.'],
+['Install the system','Use a registered vendor and get a written bill for the system.'],
+['Inspection and meter change','The DISCOM inspects the system, replaces your meter with a two-way meter and may ask you to sign an agreement.'],
+['Check your first bills','Your bill should show units sent to the grid and units drawn from it. If the numbers look wrong, complain to the DISCOM with a copy of your agreement.']]},
+'PM-KUSUM':{d:['Aadhaar card','Land ownership record or lease document (for example Khasra or Khatauni)','Bank passbook or cancelled cheque','Passport-size photograph','Details of your existing pump or electricity connection, if any','PAN card, if your state asks for it'],st:[
+['Pick your component','Component A is a small solar plant on your land. Component B is a new stand-alone solar pump, for example to replace diesel. Component C is solarising a pump that is already on the grid. Applying under the wrong one is a common reason for rejection.'],
+['Find your state agency','PM-KUSUM runs through a state nodal agency or the state DISCOM. The official site mnre.gov.in has the details. Ask at your district agriculture or energy office if you are unsure.'],
+['Check if applications are open','Some states take applications all year, others open them in batches. Ask your state agency for the current dates.'],
+['Keep your documents ready','Collect everything on the list below before you apply.'],
+['Register and apply','Apply on the state portal or at the agency office. You usually verify your Aadhaar with an OTP.'],
+['Note your application number','Write it down or take a screenshot. You need it to track your application.'],
+['Wait for verification','The agency checks your land and pump details. In some states the selection is done in batches or by lottery.'],
+['Pay your share','If you are selected, you get a letter with your share of the cost. The farmer’s share is usually 10% to 30% and varies by state, and a bank loan may cover part of it.'],
+['Installation by an approved vendor','Only a vendor approved by the state agency can install a subsidised pump. Get a receipt and the warranty papers.'],
+['Inspection and handover','The agency inspects the pump. The subsidy is generally adjusted in the pump cost, so you pay only your share.']]},
+'National Bioenergy Programme and biogas':{d:['Aadhaar card or other identity proof','Proof of residence or land','Bank passbook','Details of the number of cattle you keep','Passport-size photograph'],st:[
+['Check you have enough waste','A family biogas plant needs cattle dung (or kitchen and farm waste) every day. Count your cattle and ask what size plant they can feed.'],
+['Ask about the current subsidy','Subsidy depends on plant size and state. Ask your state renewable energy agency, district office or Gram Panchayat what is open now and how much it is.'],
+['Choose an approved design and builder','Ask the agency which designs and trained masons or companies are approved. Do not hire anyone who is not on the agency list.'],
+['Apply before you build','Submit the application with your documents. Ask if approval is needed before construction starts. If it is, wait for it.'],
+['Get the approval or sanction letter','Keep it safe. You may need it for the subsidy claim.'],
+['Build the plant','The approved builder constructs it. Keep bills and photos at each stage.'],
+['Inspection','The agency inspects the plant. Ask when and how this will happen.'],
+['Claim the subsidy','Submit the completion papers, bills and your bank details. Follow up with the agency if the money has not come in the time they gave you.'],
+['Use and maintain it','Feed it regularly, keep the pipes and burner clean, and use the leftover slurry as manure on your fields.']]},
+'Options if you rent or live in an apartment':{d:['Landlord’s consent or a written agreement to share savings','Society or RWA resolution for common-area solar','Last 12 months of common-area electricity bills','Quotes from registered vendors'],st:[
+['Cut your own bill first','Switch to LED bulbs and star-rated appliances. Set the AC to 24–26 °C. This helps now and needs no permission.'],
+['Talk to your landlord','Explain the PM Surya Ghar subsidy and offer to share the savings. Only the house owner can claim it.'],
+['If the landlord agrees, they apply','Ask them to follow the steps for PM Surya Ghar on this page. You can help with the paperwork and keep the bills.'],
+['Talk to your society or RWA','Ask the committee to look at solar for common areas such as lifts, lights and water pumps.'],
+['Collect quotes','Get written quotes from 2 or 3 registered vendors. Ask for the savings estimate and the payback time.'],
+['Get the society to approve','Present the numbers at a general body meeting and record the resolution.'],
+['Apply for support','The society applies at pmsuryaghar.gov.in for common-facility support. Check the current rate and rules there.'],
+['Join the community plan','Use the Join page of this portal to register your interest.']]}
+};
+let stk=store.get('stepticks',{});
+function guide(s,c){const g=GUIDE[s.n];if(!g)return;
+const box=document.createElement('div');box.className='stp';
+const h=document.createElement('h4');h.textContent='Step-by-step: '+s.n;
+const pr=document.createElement('p');pr.className='note';pr.setAttribute('role','status');pr.style.margin='0 0 6px';
+box.append(h,pr);
+const done=stk[s.n]||[];
+function upd(){pr.textContent=(stk[s.n]||[]).length+' of '+g.st.length+' steps done. Tick each step as you finish it.'}
+g.st.forEach(([t,d],i)=>{const l=document.createElement('label');const k=document.createElement('input');k.type='checkbox';k.checked=done.includes(i);l.classList.toggle('done',k.checked);
+const sp=document.createElement('span');const b=document.createElement('b');b.textContent='Step '+(i+1)+': '+t+'. ';sp.append(b,document.createTextNode(d));
+k.onchange=()=>{const cur=stk[s.n]||[];stk[s.n]=k.checked?[...cur,i]:cur.filter(x=>x!==i);store.set('stepticks',stk);l.classList.toggle('done',k.checked);upd()};
+l.append(k,sp);box.append(l)});
+upd();
+const dt=document.createElement('details');dt.className='dl';const sm=document.createElement('summary');sm.textContent='Documents to keep ready';dt.append(sm);
+const ul=document.createElement('ul');g.d.forEach(x=>{const li=document.createElement('li');li.textContent=x;ul.append(li)});
+const nt=document.createElement('p');nt.className='note';nt.textContent='This is a typical list. Your state agency, DISCOM or installer may ask for more.';
+dt.append(ul,nt);box.append(dt);c.append(box)}
+function drawS(){const w=$('who').value,box=$('slist');box.innerHTML='';
+S.filter(s=>w==='all'||s.for.includes(w)).forEach(s=>{const c=document.createElement('div');c.className='card';
+const h=document.createElement('h3');h.textContent=s.n;const by=document.createElement('p');by.className='note';by.textContent=s.by;
+const p=document.createElement('p');p.textContent=s.sum;const ul=document.createElement('ul');
+s.f.forEach(t=>{const li=document.createElement('li');li.textContent=t;ul.append(li)});
+const a=document.createElement('a');a.href=s.u;a.target='_blank';a.rel='noopener';a.textContent='Official website';
+c.append(h,by,p,ul,a);guide(s,c);box.append(c)})}
+$('who').addEventListener('change',drawS);drawS();
+
+/* documents checklist */
+const DOCS=['Aadhaar card and Aadhaar-linked mobile number','Latest electricity bill showing your consumer number','Proof that you own the house, such as a property tax receipt','Bank passbook or cancelled cheque','Passport-size photograph','A photo of your roof, if your installer asks for one'];
+let ticks=store.get('ticks',[]);
+function cnt(){$('dcount').textContent=ticks.length+' of '+DOCS.length+' documents ready.'}
+DOCS.forEach((t,i)=>{const l=document.createElement('label');l.style.cssText='display:flex;gap:10px;align-items:center;font-weight:400;margin:6px 0';const k=document.createElement('input');k.type='checkbox';k.style.width='auto';k.checked=ticks.includes(i);k.onchange=()=>{ticks=k.checked?[...ticks,i]:ticks.filter(x=>x!==i);store.set('ticks',ticks);cnt()};l.append(k,document.createTextNode(t));$('docs').append(l)});cnt();
+
+/* community name */
+$("cname").value=store.get("cname","Your Community Name");
+$("cname").addEventListener("input",e=>{store.set("cname",e.target.value);document.title=e.target.value+" – Renewable Energy Portal"});
+
+/* quiz */
+const qs=[["Which source is used by rooftop panels?",["Sunlight","Coal","Diesel"],0],["What does net metering do?",["Stores power in a battery","Credits extra power you send to the grid","Cuts off the grid"],1],["Which usually costs the least to run once built?",["Diesel generator","Solar panels","Coal plant"],1],["Maximum central subsidy under PM Surya Ghar?",["₹30,000","₹78,000","₹1,50,000"],1],["India’s 2030 target for non-fossil power capacity?",["500 GW","100 GW","1,000 GW"],0],["Can a tenant claim the PM Surya Ghar subsidy alone?",["Yes, always","No, it is meant for house owners","Only in winter"],1],["What is the PM Surya Ghar helpline number?",["1800","15555","100"],1],["Who is PM-KUSUM mainly for?",["Farmers","Car makers","Airlines"],0],["Which panels qualify for the PM Surya Ghar subsidy?",["Any imported panel","Panels on the ALMM approved list","Used panels"],1],["Which habit saves electricity?",["Leaving devices on standby","Using LED bulbs","Running the AC at 16 °C"],1]];
+const qz=$('quiz');
+qs.forEach(([q,o],qi)=>{const f=document.createElement('fieldset');f.className='q';const lg=document.createElement('legend');lg.textContent=(qi+1)+'. '+q;f.append(lg);
+o.forEach((t,i)=>{const l=document.createElement('label');l.className='ch';const r=document.createElement('input');r.type='radio';r.name='q'+qi;r.value=i;l.append(r,document.createTextNode(t));f.append(l)});
+const fb=document.createElement('p');fb.className='fb';f.append(fb);qz.append(f)});
+const sb=document.createElement('button');sb.textContent='Submit answers';
+const rb=document.createElement('button');rb.className='ghost';rb.textContent='Try again';rb.hidden=true;rb.style.marginLeft='8px';
+const sc=document.createElement('p');sc.className='score';sc.setAttribute('role','status');qz.append(sb,rb,sc);
+sb.onclick=()=>{let score=0,un=0;
+qz.querySelectorAll('fieldset').forEach((f,qi)=>{const a=qs[qi][2],sel=f.querySelector('input:checked'),ls=f.querySelectorAll('.ch'),fb=f.querySelector('.fb');
+if(!sel){un++;ls[a].classList.add('ok');fb.textContent='Not answered. Correct answer: '+qs[qi][1][a];fb.className='fb no';return}
+if(+sel.value===a){score++;ls[a].classList.add('ok');fb.textContent='✓ Correct';fb.className='fb ok'}
+else{ls[+sel.value].classList.add('no');ls[a].classList.add('ok');fb.textContent='✗ Wrong. Correct answer: '+qs[qi][1][a];fb.className='fb no'}});
+const pct=score/qs.length;sc.textContent='Your score: '+score+' out of '+qs.length+(un?' ('+un+' not answered)':'')+'. '+(pct>=.8?'Excellent!':pct>=.5?'Good effort. Read the Learn page and try again.':'Read the Learn page and Government schemes page, then try again.');
+qz.querySelectorAll('input').forEach(x=>x.disabled=true);sb.disabled=true;rb.hidden=false;sc.scrollIntoView({block:'nearest'})};
+rb.onclick=()=>{qz.querySelectorAll('input').forEach(x=>{x.disabled=false;x.checked=false});qz.querySelectorAll('.ch').forEach(l=>l.classList.remove('ok','no'));qz.querySelectorAll('.fb').forEach(p=>{p.textContent='';p.className='fb'});sc.textContent='';sb.disabled=false;rb.hidden=true};
+
+/* calculator */
+function calc(){
+const bill=+$("bill").value||0,t=+$("tariff").value||1,c=+$("cost").value||0;
+const units=bill/t,kw=Math.max(1,Math.ceil(units/120));
+const gross=kw*c,sub=kw>=3?78000:kw===2?60000:30000,net=Math.max(0,gross-sub);
+const save=Math.min(units,kw*120)*t*12,pay=save>0?net/save:0,co2=Math.min(units,kw*120)*12*.82;
+const items=[["Suggested size",kw+" kW"],["Upfront cost","₹"+fmt(gross)],["Estimated subsidy","₹"+fmt(sub)],["You pay","₹"+fmt(net)],["Saved per year","₹"+fmt(save)],["Payback",pay.toFixed(1)+" years"],["CO₂ avoided per year",fmt(co2)+" kg"]];
+$("calcout").innerHTML="";
+items.forEach(([l,v])=>{const d=document.createElement("div");d.className="stat";const b=document.createElement("div");b.className="big";b.style.fontSize="1.7rem";b.textContent=v;const s=document.createElement("small");s.textContent=l;d.append(b,s);$("calcout").append(d)});}
+["bill","tariff","cost"].forEach(i=>$(i).addEventListener("input",calc));calc();
+
+/* tracker */
+let readings=store.get("readings",[]);
+$("tm").value=new Date().toISOString().slice(0,7);
+function drawT(){const box=$("tchart");box.innerHTML="";
+if(!readings.length){box.innerHTML='<p class="note">No readings yet. Enter last month’s units from your bill to start the chart.</p>';return}
+const r=[...readings].sort((a,b)=>a.m.localeCompare(b.m)).slice(-12),mx=Math.max(...r.map(x=>x.u)),w=56;
+const ns="http://www.w3.org/2000/svg",s=document.createElementNS(ns,"svg");s.setAttribute("viewBox","0 0 "+(r.length*w+10)+" 190");s.style.minWidth=(r.length*w)+"px";s.setAttribute("role","img");s.setAttribute("aria-label","Monthly electricity use");
+r.forEach((x,i)=>{const h=mx?x.u/mx*130:0;
+const rect=document.createElementNS(ns,"rect");rect.setAttribute("x",i*w+10);rect.setAttribute("y",150-h);rect.setAttribute("width",36);rect.setAttribute("height",h);rect.setAttribute("rx",4);rect.setAttribute("fill","#f2b705");
+const v=document.createElementNS(ns,"text");v.setAttribute("x",i*w+28);v.setAttribute("y",144-h);v.setAttribute("text-anchor","middle");v.setAttribute("font-size","12");v.setAttribute("fill","currentColor");v.textContent=x.u;
+const l=document.createElementNS(ns,"text");l.setAttribute("x",i*w+28);l.setAttribute("y",170);l.setAttribute("text-anchor","middle");l.setAttribute("font-size","11");l.setAttribute("fill","currentColor");l.textContent=x.m.slice(2);
+s.append(rect,v,l)});box.append(s);
+const avg=r.reduce((a,b)=>a+b.u,0)/r.length,p=document.createElement("p");p.className="note";p.textContent="Average: "+fmt(avg)+" kWh per month. Peak: "+fmt(mx)+" kWh.";box.append(p)}
+$("tadd").onclick=()=>{const m=$("tm").value,u=+$("tu").value;
+if(!m||!(u>0)){$("tmsg").textContent="Choose a month and enter units above 0.";return}
+readings=readings.filter(x=>x.m!==m);readings.push({m,u});store.set("readings",readings);$("tmsg").textContent="Saved reading for "+m+".";$("tu").value="";drawT()};
+drawT();
+
+/* registrations */
+let regs=store.get("regs",[]);
+function drawR(){const b=$("rrows");b.innerHTML="";$("rempty").hidden=regs.length>0;
+regs.forEach(r=>{const tr=document.createElement("tr");[r.n,r.h,r.i,r.k].forEach(v=>{const td=document.createElement("td");td.textContent=v;tr.append(td)});b.append(tr)})}
+$("radd").onclick=()=>{const n=$("rn").value.trim(),h=$("rh").value.trim();
+if(!n||!h){$("rmsg").textContent="Enter your name and house number to register.";return}
+regs.push({n,h,i:$("ri").value,k:+$("rk").value||1});store.set("regs",regs);$("rmsg").textContent="Registered. Thank you, "+n+".";$("rn").value=$("rh").value="";drawR()};
+drawR();
+
+/* issues */
+let issues=store.get("issues",[]);
+function drawI(){const b=$("irows");b.innerHTML="";$("iempty").hidden=issues.length>0;
+issues.forEach((x,i)=>{const tr=document.createElement("tr");
+[x.d,x.l].forEach(v=>{const td=document.createElement("td");td.textContent=v||"–";tr.append(td)});
+const st=document.createElement("td"),tag=document.createElement("span");tag.className="tag"+(x.s==="Open"?" open":"");tag.textContent=x.s;st.append(tag);
+const ac=document.createElement("td"),bt=document.createElement("button");bt.className="ghost";bt.textContent=x.s==="Open"?"Mark resolved":"Reopen";
+bt.onclick=()=>{x.s=x.s==="Open"?"Resolved":"Open";store.set("issues",issues);drawI()};ac.append(bt);tr.append(st,ac);b.append(tr)})}
+$("iadd").onclick=()=>{const d=$("id").value.trim();if(!d){$("id").focus();return}
+issues.unshift({d,l:$("il").value.trim(),s:"Open"});store.set("issues",issues);$("id").value=$("il").value="";drawI()};
+drawI();
+
+/* dashboard */
+function dash(){const base={hh:48,kw:126},kw=base.kw+regs.reduce((a,r)=>a+r.k,0),hh=base.hh+regs.length;
+const gen=kw*120*12,co2=gen*.82,trees=co2/21,money=gen*(+$("tariff").value||7);
+const items=[["Households participating",fmt(hh)],["Installed capacity",fmt(kw)+" kW"],["Energy generated per year",fmt(gen)+" kWh"],["CO₂ avoided per year",fmt(co2/1000)+" tonnes"],["Equivalent trees planted",fmt(trees)],["Bills saved per year","₹"+fmt(money)],["Open issues",issues.filter(i=>i.s==="Open").length]];
+const g=$("dash");g.innerHTML="";
+items.forEach(([l,v])=>{const c=document.createElement("div");c.className="card stat";const b=document.createElement("div");b.className="big";b.textContent=v;const s=document.createElement("small");s.textContent=l;c.append(b,s);g.append(c)})}
+/* sharing */
+(function(){
+const base=location.protocol==='file:'?'':location.href.split('#')[0];
+const link=$('slink'),txt=$('smsgtxt');
+const defMsg=()=>'☀️ '+($('cname').value.trim()||'Our community')+' is going solar! Check how much you can save, see the government subsidy (up to ₹78,000) and join our community plan:';
+link.value=store.get('sharelink',base);
+txt.value=store.get('sharemsg',defMsg());
+function note(){$('slinknote').textContent=location.protocol==='file:'&&!link.value?'This page is opened from a file, so it has no web address yet. Upload it to a website or hosting service, then paste the web address here.':'You can change this link, for example to a short link or your own website.'}
+note();
+link.addEventListener('input',()=>{store.set('sharelink',link.value.trim());note()});
+txt.addEventListener('input',()=>store.set('sharemsg',txt.value));
+const full=()=>txt.value.trim()+(link.value.trim()?'\n'+link.value.trim():'');
+const ok=m=>{$('shmsg').textContent=m};
+async function copy(t,m){try{await navigator.clipboard.writeText(t);ok(m)}catch(e){const a=document.createElement('textarea');a.value=t;document.body.append(a);a.select();try{document.execCommand('copy');ok(m)}catch(x){ok('Copy did not work. Select the text and copy it by hand.')}a.remove()}}
+const E=encodeURIComponent;
+function upd(){const u=link.value.trim(),t=txt.value.trim();
+$('shwa').href='https://wa.me/?text='+E(full());
+$('shtg').href='https://t.me/share/url?url='+E(u||' ')+'&text='+E(t);
+$('shfb').href='https://www.facebook.com/sharer/sharer.php?u='+E(u);
+$('shx').href='https://twitter.com/intent/tweet?text='+E(t)+'&url='+E(u);
+$('shmail').href='mailto:?subject='+E('Join our community solar plan')+'&body='+E(full());
+$('shsms').href='sms:?&body='+E(full())}
+upd();
+link.addEventListener('input',upd);txt.addEventListener('input',upd);$('cname').addEventListener('input',()=>{if(!store.get('sharemsg',null)){txt.value=defMsg();upd()}});
+$('shcopy').onclick=()=>{if(!link.value.trim()){ok('There is no link yet. Paste your portal web address in the Portal link box.');link.focus();return}copy(link.value.trim(),'Link copied.')};
+$('shcopym').onclick=()=>copy(full(),link.value.trim()?'Message and link copied.':'Message copied. Add the portal link above to include it.');
+$('sharebox').addEventListener('click',e=>{if(e.target.closest('a.sh')&&!link.value.trim())ok('Sharing the message without a link. Paste your portal web address above to include it.')});
+if(navigator.share){$('shnative').hidden=false;$('shnative').onclick=()=>{navigator.share({title:document.title,text:txt.value.trim(),url:link.value.trim()}).catch(()=>{})}}
+})();
+route();
+</script>
+</body>
+</html>
